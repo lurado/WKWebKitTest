@@ -27,6 +27,8 @@ get '/' do
         <a href="itms://itunes.apple.com/de/app/id553834731?mt=8">itms://</a><br/>
         <a href="mailto:info@example.com">mailto:</a><br/>
         <a href="tel:011-123-4567">tel:</a><br/>
+        <a href="/blank" target="_blank">_blank</a><br/>
+        <a href="/blank" target="_new">_new</a><br/>
       </body>
     </html>
   EOF
@@ -37,7 +39,7 @@ get '/set_session_cookie' do
   <<-EOF
     <html>
       <body>
-        <h1>WKWebViewTest</h1>
+        <h1>/set_session_cookie</h1>
         <a href="/">Home</a>
       </body>
     </html>
@@ -49,7 +51,18 @@ get '/set_persistent_cookie' do
   <<-EOF
     <html>
       <body>
-        <h1>WKWebViewTest</h1>
+        <h1>/set_persistent_cookie</h1>
+        <a href="/">Home</a>
+      </body>
+    </html>
+  EOF
+end
+
+get '/blank' do
+  <<-EOF
+    <html>
+      <body>
+        <h1>/blank</h1>
         <a href="/">Home</a>
       </body>
     </html>

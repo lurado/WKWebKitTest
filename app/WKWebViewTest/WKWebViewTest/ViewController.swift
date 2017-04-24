@@ -11,7 +11,9 @@ import WebKit
 
 private let kUseWKWebView = true
 
-class ViewController: UIViewController, UIWebViewDelegate, WKNavigationDelegate {
+class ViewController: UIViewController, UIWebViewDelegate, WKNavigationDelegate, WKUIDelegate {
+    private var wkWebView: WKWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,11 +21,12 @@ class ViewController: UIViewController, UIWebViewDelegate, WKNavigationDelegate 
         if kUseWKWebView {
             navigationItem.title = "WKWebView"
             let configuration = WKWebViewConfiguration()
-            let webView = WKWebView(frame: view.bounds, configuration: configuration)
-            webView.navigationDelegate = self
-            webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            view.addSubview(webView)
-            webView.load(request)
+            wkWebView = WKWebView(frame: view.bounds, configuration: configuration)
+            wkWebView.navigationDelegate = self
+            wkWebView.uiDelegate = self
+            wkWebView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.addSubview(wkWebView)
+            wkWebView.load(request)
         } else {
             navigationItem.title = "UIWebView"
             let webView = UIWebView(frame: view.bounds)
@@ -135,6 +138,14 @@ class ViewController: UIViewController, UIWebViewDelegate, WKNavigationDelegate 
                 return
             }
         }
+    }
+    
+    // MARK: - WKUIDelegate
+    
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        print("create new window")
+        wkWebView.load(navigationAction.request)
+        return nil
     }
 }
 
